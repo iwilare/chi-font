@@ -1,0 +1,128 @@
+<!DOCTYPE html><head><style>body {margin: 0; height: 100%;}svg text {user-select: none;}</style></head><body><script src="svg.js"></script><script>
+
+/*
+    <>^v\/
+    [
+    ]
+    (
+    )
+*/
+
+const data =
+   {
+     'A': '>//' //'\\<'
+   , 'B': '<\\v'
+   , 'C': '^<v'
+   , 'D': '/>v'
+   , 'E': '^\\'
+   , 'F': '<\\'
+   , 'G': '^>v'
+   , 'H': '<^>'
+   , 'I': '^/'
+   , 'J': '>v'
+   , 'K': '\\</'
+   , 'L': '<v'
+   , 'M': '</>'
+   , 'N': '<\\>'
+   , 'O': '^<v>'
+   , 'P': '<^/'
+   , 'Q': '\\^>'
+   , 'R': '<^'
+   , 'S': '^\\v'
+   , 'T': '^>'
+   , 'U': '<v>'
+   , 'V': '</'
+   , 'W': '\\</>'
+   , 'X': '\\/v'
+   , 'Y': '\\>'
+   , 'Z': '^/v'
+   , ',': '/'
+   , '.': '\\'
+   , ' ': 'v'
+   , '$': 'v'
+   , '(': '/v'
+   , ')': 'v\\'
+   , '?': '\\>'
+   }
+
+
+   const signColor =
+   {
+     'A': 'red'
+   , 'B': 'green'
+   , 'C': 'blue'
+   , 'D': 'green'
+   , 'E': 'darkred'
+   , 'F': 'darkred'
+   , 'G': 'blue'
+   , 'H': 'blue'
+   , 'I': 'darkred'
+   , 'J': 'orange'
+   , 'K': 'black'
+   , 'L': 'orange'
+   , 'M': 'purple'
+   , 'N': 'purple'
+   , 'O': 'black'
+   , 'P': 'green'
+   , 'Q': 'green'
+   , 'R': 'orange'
+   , 'S': 'purple'
+   , 'T': 'orange'
+   , 'U': 'blue'
+   , 'V': 'red'
+   , 'W': 'black'
+   , 'X': 'black'
+   , 'Y': 'red'
+   , 'Z': 'purple'
+   , ',': 'black'
+   , '.': 'black'
+   , ' ': 'black'
+   , '$': 'black'
+   , '(': 'red'
+   , ')': 'darkred'
+   , '?': 'darkred'
+   }
+
+const strokeData =
+   { '<':  [0, 0, 0, 1]
+   , '^':  [0, 0, 1, 0]
+   , '\\': [0, 0, 1, 1]
+   , '/':  [0, 1, 1, 0]
+   , 'v':  [0, 1, 1, 1]
+   , '>':  [1, 0, 1, 1]
+   }
+
+const size = 50
+const strk = 10
+
+function stroke(svg, c, size, width, color) {
+    svg.line(...strokeData[c].map(_ => _ * size))
+       .stroke({
+           width: width,
+           linecap: 'round',
+           color: color
+       })
+}
+function letter(svg, l, size, width, color) {
+    data[l].split('').forEach(c => stroke(svg.group(), c, size, width, signColor[l]))
+    //svg.text(l)
+    //   .center(20, 20 + size)
+    //   .fill(color)
+}
+function main(svg) {
+    let x = 20, y = 20, i = 0
+    for(const d in data) {
+        const g = svg.group()
+        letter(g, d, size, strk, '#000');
+        g.move(x, y)
+        x += size + 40
+        i += 1
+        if (i == 5) {
+            x = 20
+            y += size + 40
+            i = 0
+        }
+    }
+}
+main(SVG().addTo('body').size('5000','5000'))
+</script></body></html>
